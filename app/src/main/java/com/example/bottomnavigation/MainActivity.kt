@@ -5,6 +5,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -29,5 +30,22 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
+
+        //Hide nav bar
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.homeFragment -> showBottomNavigationBar(true)
+                R.id.rateFragment -> showBottomNavigationBar(true)
+                R.id.ratedFragment -> showBottomNavigationBar(false)
+            }
+        }
+    }
+
+    //Hide nav bar
+    private fun showBottomNavigationBar(visible: Boolean){
+        when(visible){
+            true -> navView.visibility = View.VISIBLE
+            false -> navView.visibility = View.GONE
+        }
     }
 }
